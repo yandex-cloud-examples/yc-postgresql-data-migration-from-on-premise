@@ -1,5 +1,3 @@
-# Название сценария
+# Миграция базы данных из стороннего кластера PostgreSQL в кластер Yandex Managed Service for PostgreSQL
 
-Описание сценария и инструкция по его применению.
-
-Для практических руководств обязательна ссылка на документацию.
+Вы можете перенести данные из стороннего кластера-источника PostgreSQL в кластер-приемник [Managed Service for PostgreSQL](https://yandex.cloud/ru/docs/managed-postgresql) с помощью логической репликации или с помощью создания логического дампа и восстановления из него. Подготовка инфраструктуры для Managed Service for PostgreSQL через Terraform описана в [практическом руководстве](https://yandex.cloud/ru/docs/tutorials/dataplatform/postgresql-data-migration#backup), необходимые для настройки конфигурационные файлы [data-migration-pgsql-mpg.tf](data-migration-pgsql-mpg.tf) и [data-restore-pgsql-mpg.tf](data-restore-pgsql-mpg.tf) расположены в этом репозитории.
