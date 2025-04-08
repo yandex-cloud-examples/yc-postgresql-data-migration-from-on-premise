@@ -1,14 +1,13 @@
 # Infrastructure for Yandex Cloud Managed Service for PostgreSQL cluster and Virtual Machine.
 #
-# RU: https://cloud.yandex.ru/docs/managed-postgresql/tutorials/data-migration
-# EN: https://cloud.yandex.com/en/docs/managed-postgresql/tutorials/data-migration
+# RU: https://yandex.cloud/ru/docs/managed-postgresql/tutorials/data-migration
+# EN: https://yandex.cloud/en/docs/managed-postgresql/tutorials/data-migration
 
 # Specify the following settings:
 locals {
-  # Source cluster settings:
-  source_db_name = "" # Set the source cluster database name. It is also used for the target cluster database.
   # Managed Service for PostgreSQL cluster.
-  target_pgsql_version = "" # Set the PostgreSQL version. It must be the same as the version of the source cluster.
+  target_db_name       = "" # Set the name of database in Managed Service for PostgreSQL
+  target_pgsql_version = "" # Set the PostgreSQL version. It must be the same or higher than the source cluster.
   target_user          = "" # Set the target cluster username.
   target_password      = "" # Set the target cluster password.
   # (Optional) Virtual Machine.
@@ -108,6 +107,7 @@ resource "yandex_mdb_postgresql_cluster" "mpg-cluster" {
 resource "yandex_mdb_postgresql_database" "database" {
   cluster_id = yandex_mdb_postgresql_cluster.mpg-cluster.id
   name       = local.target_db_name
+  owner = yandex_mdb_postgresql_user.user.name
 
   # Set the names of PostgreSQL extensions with cycle.
   dynamic "extension" {
@@ -123,10 +123,6 @@ resource "yandex_mdb_postgresql_user" "user" {
   cluster_id = yandex_mdb_postgresql_cluster.mpg-cluster.id
   name       = local.target_user
   password   = local.target_password
-  permission {
-    database_name = local.target_db_name
-  }
-  grants = ["ALL"]
 }
 
 # If you use VM for loading database dump and restoring data to the cluster, uncomment these lines.
