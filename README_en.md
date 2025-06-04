@@ -1,0 +1,3 @@
+# Migrating a database from a third-party PostgreSQL cluster to a Yandex Managed Service for PostgreSQL cluster
+
+To transfer data from a third-party PostgreSQL source cluster to a [Managed Service for PostgreSQL](https://yandex.cloud/docs/managed-postgresql) target cluster, use logical replication or create a logical dump to restore your data from it. See this [tutorial](https://yandex.cloud/docs/tutorials/dataplatform/postgresql-data-migration#backup) to learn how to prepare the infrastructure for Managed Service for PostgreSQL using Terraform. This repository contains the configuration files you will need: [data-migration-pgsql-mpg.tf](data-migration-pgsql-mpg.tf) and [data-restore-pgsql-mpg.tf](data-restore-pgsql-mpg.tf).
